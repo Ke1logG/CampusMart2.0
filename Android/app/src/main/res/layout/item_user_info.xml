@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="16dp">
+    <!-- 头像 -->
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/avatar_slow"
+        android:background="@drawable/shape_circle"/>
+    <!-- 用户名 -->
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/dark_black"
+        android:text="Slow"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="16sp"
+        android:layout_marginStart="12dp"/>
+    <!-- 新旧程度 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_tag"/>
+        <TextView
+            android:id="@+id/tv_new_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99% new"
+            android:textSize="12sp"
+            android:fontFamily="@font/ubuntu_m"
+            android:textColor="@color/dark_black"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+</LinearLayout>

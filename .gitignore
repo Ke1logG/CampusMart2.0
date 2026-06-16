@@ -1,0 +1,35 @@
+# Maven编译产物
+target/
+*.jar
+*.war
+*.ear
+
+# IDE配置文件（IDEA/Eclipse/VSCode）
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.vscode/
+*.sublime-*
+
+# 敏感配置文件（含密钥、密码）
+*.yml
+*.properties
+.env
+.env.local
+config/application-*.yml
+
+# 日志和临时文件
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+*.cache
+
+# 系统文件
+.DS_Store  # Mac系统
+Thumbs.db  # Windows系统

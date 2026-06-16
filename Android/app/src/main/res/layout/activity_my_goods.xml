@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- 顶部返回栏+标题 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="13dp"
+        android:background="#2196F3">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_back_white"
+            android:layout_marginStart="16dp"
+            android:clickable="true"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="My goods"
+            android:textSize="18sp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/ubuntu_m"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- 商品列表RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_goods"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"/>
+
+</LinearLayout>

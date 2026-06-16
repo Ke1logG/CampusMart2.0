@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- 顶部用户栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/menu_blue_rounded"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+        <!-- 头像 -->
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User"
+                android:layout_marginTop="13dp"
+                android:fontFamily="@font/ubuntu_b"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="16dp">
+        <!-- 头像 -->
+        <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/avatar_marry"
+            android:background="@drawable/shape_circle"
+            android:scaleType="centerCrop"/>
+        <!-- 用户名+欢迎语 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marry"
+                android:fontFamily="@font/ubuntu_m"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tv_profileSignature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nice to meet you"
+                android:fontFamily="@font/ubuntu_m"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- 功能列表 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- 个人信息 -->
+        <LinearLayout
+            android:id="@+id/layout_personal_info"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="4pt"
+            android:layout_marginHorizontal="25dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_m"
+                android:text="Personal information"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_setting"/>
+        </LinearLayout>
+        <!-- 分割线 -->
+        <View
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="4dp"/>
+
+        <!-- 我的商品 -->
+        <LinearLayout
+            android:id="@+id/layout_my_goods"
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingLeft="4pt"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_m"
+                android:text="My goods"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_list"/>
+        </LinearLayout>
+        <View
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="4dp"/>
+
+<!--        &lt;!&ndash; 历史订单 &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layout_history_purchase"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:paddingLeft="4pt"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="25dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:fontFamily="@font/ubuntu_m"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Historical purchase"-->
+<!--                android:textSize="16sp"/>-->
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+<!--            <ImageView-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:src="@drawable/ic_list"/>-->
+<!--        </LinearLayout>-->
+<!--        <View-->
+<!--            android:layout_marginHorizontal="25dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="@android:color/darker_gray"-->
+<!--            android:layout_marginVertical="4dp"/>-->
+
+<!--        &lt;!&ndash; 收藏 &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layout_collection"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:layout_marginHorizontal="25dp"-->
+<!--            android:paddingLeft="4pt"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:fontFamily="@font/ubuntu_m"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Collection"-->
+<!--                android:textSize="16sp"/>-->
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+<!--            <ImageView-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:src="@drawable/ic_star"/>-->
+<!--        </LinearLayout>-->
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/> <!-- 权重会让这个View占据剩余空间，按钮自然向下 -->
+
+    <!-- 退出登录按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="logout"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:fontFamily="@font/ubuntu_m"
+        android:background="@drawable/btn_brown_rounded"
+        android:layout_marginHorizontal="55dp"
+        android:layout_marginBottom="60dp"/>
+
+</LinearLayout>

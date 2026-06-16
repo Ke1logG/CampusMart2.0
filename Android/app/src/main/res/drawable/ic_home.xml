@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中状态显示蓝色图标 -->
+    <item android:drawable="@drawable/ic_home_blue" android:state_selected="true"/>
+    <!-- 未选中状态显示灰色图标 -->
+    <item android:drawable="@drawable/ic_home_grey" android:state_selected="false"/>
+</selector>

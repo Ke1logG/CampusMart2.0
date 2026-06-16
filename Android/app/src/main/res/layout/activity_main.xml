@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- 顶部插画区域 -->
+    <ImageView
+        android:id="@+id/iv_illustration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/campus_mart"
+        android:adjustViewBounds="true"
+        android:layout_marginRight="2dp"
+        android:background="@android:color/white"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- 标题文字：Campus -->
+    <TextView
+        android:id="@+id/tv_campus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Campus"
+        android:fontFamily="@font/ubuntu_b"
+        android:textSize="42sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="44dp"/>
+
+    <!-- 标题文字：Mart -->
+    <TextView
+        android:id="@+id/tv_mart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mart"
+        android:textSize="40sp"
+        android:fontFamily="@font/ubuntu_b"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 登录按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="login"
+        android:fontFamily="@font/ubuntu_m"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_rounded_black"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="48dp"
+        android:textSize="16dp"
+        android:gravity="center"/>
+
+    <!-- 注册提示 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No account?"
+            android:fontFamily="@font/ubuntu_b"
+            android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="register"
+            android:fontFamily="@font/ubuntu_b"
+            android:textColor="@android:color/holo_blue_light"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>

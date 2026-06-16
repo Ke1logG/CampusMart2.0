@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="22dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:fontFamily="@font/ubuntu_b"
+        android:textSize="48sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="25dp" />
+
+    <!-- School Name输入框 -->
+    <EditText
+        android:id="@+id/et_school_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:hint="School Name"
+        android:layout_marginHorizontal="17dp"
+        android:textSize="16dp"
+        android:textColor="@color/dark_black"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Student ID输入框 -->
+    <EditText
+        android:id="@+id/et_student_id"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textColor="@color/dark_black"
+        android:hint="Student ID"
+        android:layout_marginHorizontal="17dp"
+        android:textSize="16dp"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- username输入框 -->
+    <EditText
+        android:id="@+id/et_username"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/dark_black"
+        android:fontFamily="@font/ubuntu_m"
+        android:hint="username"
+        android:layout_marginHorizontal="17dp"
+        android:textSize="16dp"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- password输入框 -->
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textColor="@color/dark_black"
+        android:layout_marginHorizontal="17dp"
+        android:textSize="16dp"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- phone number输入框 -->
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textColor="@color/dark_black"
+        android:layout_marginHorizontal="17dp"
+        android:textSize="16dp"
+        android:hint="phone number"
+        android:inputType="phone"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="15dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- 验证码+发送按钮容器 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="17dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="64dp">
+
+        <!-- verification code输入框 -->
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:fontFamily="@font/ubuntu_m"
+            android:layout_weight="1"
+            android:textColor="@color/dark_black"
+            android:textSize="16dp"
+            android:hint="verification code"
+            android:background="@drawable/rounded_edittext_bg"
+            android:paddingHorizontal="15dp"
+            android:layout_marginEnd="12dp"/>
+
+        <!-- send按钮 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:fontFamily="@font/ubuntu_m"
+            android:text="send"
+            android:textColor="@android:color/black"
+            android:background="@drawable/rounded_edittext_bg"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+    <!-- 在密码输入框和login按钮之间添加空View -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/> <!-- 权重会让这个View占据剩余空间，按钮自然向下 -->
+
+    <!-- register按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="register"
+        android:layout_marginHorizontal="33dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="17dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_rounded_black"
+        android:textAllCaps="false"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- login跳转文本 -->
+    <TextView
+        android:layout_marginBottom="70dp"
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:fontFamily="@font/ubuntu_b"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="15sp"/>
+
+</LinearLayout>

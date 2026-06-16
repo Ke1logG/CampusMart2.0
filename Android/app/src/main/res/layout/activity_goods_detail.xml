@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="25dp"
+    android:background="@android:color/white">
+    <!-- 返回按钮 -->
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_back"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="5pt"
+        android:clickable="true"/>
+    <!-- 商品信息RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_goods_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <!-- 底部操作栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:orientation="horizontal"
+        android:paddingBottom="12dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:background="#F8F8F8">
+        <!-- 点赞按钮 -->
+        <ImageView
+            android:id="@+id/iv_like"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_like"
+            android:layout_marginStart="10dp"
+            android:clickable="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <!-- 购买按钮 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_buy"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/ubuntu_m"
+            android:text="Buy it!"
+            android:textColor="@android:color/white"
+            android:background="@drawable/btn_pink_rounded"
+            android:layout_marginStart="24dp"/>
+    </LinearLayout>
+</LinearLayout>

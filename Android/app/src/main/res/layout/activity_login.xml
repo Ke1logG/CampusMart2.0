@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="32dp"
+    android:gravity="center_horizontal">
+
+    <!-- Login标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_b"
+        android:text="Login"
+        android:textSize="60sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="64dp"
+        android:layout_marginTop="80dp"/>
+
+    <!-- username输入框 -->
+    <EditText
+        android:id="@+id/et_username"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/dark_black"
+        android:fontFamily="@font/ubuntu_m"
+        android:hint="username"
+        android:textSize="16dp"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- password输入框 -->
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_marginTop="3dp"
+        android:layout_height="45dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="16dp"
+        android:hint="password"
+        android:textColor="@color/dark_black"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="64dp"/>
+
+    <!-- 在密码输入框和login按钮之间添加空View -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/> <!-- 权重会让这个View占据剩余空间，按钮自然向下 -->
+
+    <!-- login按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_loginLogin"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="login"
+        android:layout_marginHorizontal="33dp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="17dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_rounded_black"
+        android:textAllCaps="false"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- 注册提示 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No account?"
+            android:fontFamily="@font/ubuntu_b"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="register"
+            android:fontFamily="@font/ubuntu_b"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="13sp"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>

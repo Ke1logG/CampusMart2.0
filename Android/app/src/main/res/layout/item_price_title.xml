@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
+    <!-- 价格 -->
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥ 699.00"
+        android:textColor="#E91E63"
+        android:textSize="20sp"
+        android:fontFamily="@font/ubuntu_m"
+        android:textStyle="bold"/>
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="99% new keyboard"
+        android:textColor="@color/dark_black"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <!-- 顶部标题栏+返回按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical">
+        <!-- 返回按钮 -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_back"
+            android:clickable="true"/>
+        <!-- 页面标题 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/dark_black"
+            android:text="Service"
+            android:textSize="18sp"
+            android:fontFamily="@font/ubuntu_b"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- 提交按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_water"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:text="Water Fee Service"
+        android:layout_marginHorizontal="40dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="17sp"
+        android:background="@drawable/btn_brown_rounded"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- 提交按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_network"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:text="Network Service"
+        android:layout_marginHorizontal="40dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="17sp"
+        android:background="@drawable/btn_grey_rounded"
+        android:layout_marginBottom="32dp"/>
+
+
+    <!-- 提交按钮 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_SCNU"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:text="SCNU platform"
+        android:layout_marginHorizontal="40dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/ubuntu_m"
+        android:textSize="17sp"
+        android:background="@drawable/btn_pink_rounded"
+        android:layout_marginBottom="42dp"/>
+
+</LinearLayout>

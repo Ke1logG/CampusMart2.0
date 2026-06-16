@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="16dp"
+    android:gravity="center_vertical">
+    <!-- 对方头像 -->
+    <ImageView
+        android:id="@+id/iv_other_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/avatar_slow"
+        android:background="@drawable/shape_circle"/>
+    <!-- 对方消息气泡 -->
+    <TextView
+        android:id="@+id/tv_other_msg"
+        android:fontFamily="@font/ubuntu_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_msg_gray"
+        android:text="If you have any questions, leave a message here"
+        android:textSize="14sp"
+        android:padding="12dp"
+        android:layout_marginStart="8dp"
+        android:maxWidth="240dp"/>
+</LinearLayout>

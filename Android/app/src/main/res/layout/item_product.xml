@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_card_bg"
+    android:elevation="2dp"
+    android:padding="8dp"
+    android:layout_margin="4dp">
+
+    <!-- 商品图片 -->
+    <ImageView
+        android:id="@+id/iv_product"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"/>
+
+    <!-- 商品标题 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Product Title"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/ubuntu_m"
+        android:layout_marginTop="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- 发布者信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp">
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/placeholder"
+            android:background="@drawable/shape_circle"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"/>
+        <TextView
+            android:id="@+id/tv_publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publisher"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:fontFamily="@font/ubuntu_m"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

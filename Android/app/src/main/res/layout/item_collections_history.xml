@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_item_bg"
+    android:padding="16dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginHorizontal="15dp"
+    android:gravity="center_vertical">
+
+    <!-- 商品图片 -->
+    <ImageView
+        android:id="@+id/iv_goods_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/placeholder"
+        android:scaleType="centerCrop"/>
+
+    <!-- 商品信息区域 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+        <!-- 商品标题 -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_b"
+            android:text="book"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <!-- 商品描述 -->
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I'm about to graduate and have found quite a few idle books."
+            android:textSize="12sp"
+            android:fontFamily="@font/ubuntu_m"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:layout_marginRight="5dp"
+            android:ellipsize="end"/>
+        <!-- 新旧程度 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="4dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_tag"/>
+            <TextView
+                android:id="@+id/tv_new_degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70% new"
+                android:fontFamily="@font/ubuntu_m"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+        <!-- 价格 -->
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 30"
+            android:textColor="#E91E63"
+            android:textSize="14sp"
+            android:fontFamily="@font/ubuntu_m"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- 操作按钮区域 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            android:layout_width="60dp"
+            android:layout_height="32dp"
+            android:textAllCaps="false"
+            android:text="delete"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/ubuntu_m"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/btn_red_rounded"/>
+    </LinearLayout>
+
+</LinearLayout>
