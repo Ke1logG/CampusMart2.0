@@ -16,7 +16,8 @@ target/
 *.sublime-*
 
 # 敏感配置文件（含密钥、密码）
-*.yml
+application-dev.yml
+application-prod.yml
 *.properties
 .env
 .env.local

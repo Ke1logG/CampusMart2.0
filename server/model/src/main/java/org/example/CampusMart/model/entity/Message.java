@@ -35,4 +35,8 @@ public class Message {
     @Schema(description="message time")
     @TableField("sendTime")
     private Date sendTime;
+
+    @Schema(description="关联商品ID")
+    @TableField("goodID")
+    private Long goodID;
 }
