@@ -6,12 +6,14 @@ import org.example.CampusMart.common.result.ResultCodeEnum;
 import org.example.CampusMart.model.entity.Goods;
 import org.example.CampusMart.model.entity.Order;
 import org.example.CampusMart.model.entity.Picture;
+import org.example.CampusMart.web.config.RabbitmqConfig;
 import org.example.CampusMart.web.mapper.OrderMapper;
 import org.example.CampusMart.web.mapper.PictureMapper;
 import org.example.CampusMart.web.service.GoodsService;
 import org.example.CampusMart.web.service.OrderService;
 import org.example.CampusMart.web.service.WalletService;
 import org.example.CampusMart.web.vo.OrderVo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PictureMapper pictureMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     private static final String STATUS_CREATED = "CREATED";
     private static final String STATUS_PAID = "PAID";
@@ -64,6 +69,12 @@ public class OrderServiceImpl implements OrderService {
         order.setCreateTime(new Date());
         order.setUpdateTime(new Date());
         orderMapper.insert(order);
+
+        rabbitTemplate.convertAndSend(
+                RabbitmqConfig.ORDER_DELAY_EXCHANGE,
+                RabbitmqConfig.ORDER_DELAY_ROUTING_KEY,
+                order.getOrderID()
+        );
 
         return convertToVo(order);
     }
