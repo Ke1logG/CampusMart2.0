@@ -8,6 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 订单超时取消的 RabbitMQ 延迟队列配置。
+ *
+ * 设计：订单创建时发送一条消息到 order.delay.queue，30 分钟后消息过期进入死信队列
+ * order.dead.queue，由 OrderTimeoutListener 消费并取消订单。
+ *
+ * 这是订单超时取消的<b>主流程</b>，定时任务 OrderTimeoutJob 作为兜底补偿。
+ */
 @Configuration
 public class RabbitmqConfig {
 

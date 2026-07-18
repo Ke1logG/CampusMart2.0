@@ -70,6 +70,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(new Date());
         orderMapper.insert(order);
 
+        // 发送 RabbitMQ 延迟消息，30 分钟后由死信队列消费者取消未支付订单
         rabbitTemplate.convertAndSend(
                 RabbitmqConfig.ORDER_DELAY_EXCHANGE,
                 RabbitmqConfig.ORDER_DELAY_ROUTING_KEY,

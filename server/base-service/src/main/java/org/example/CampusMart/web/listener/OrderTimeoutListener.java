@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * 订单超时取消的 RabbitMQ 死信队列消费者。
+ *
+ * 这是订单超时取消的<b>主流程</b>：订单创建 30 分钟后，延迟消息过期进入死信队列，
+ * 由本消费者消费并取消订单。即使消息重复消费，由于会判断订单状态，也具有幂等性。
+ */
 @Slf4j
 @Component
 public class OrderTimeoutListener {
@@ -18,7 +24,7 @@ public class OrderTimeoutListener {
     private OrderMapper orderMapper;
 
     @RabbitListener(queues = RabbitmqConfig.ORDER_DEAD_QUEUE)
-    public void handleOrderTimeout(Long orderId) {
+    public void handleOrderTimeout(String orderId) {
         log.info("收到订单超时消息，orderId={}", orderId);
 
         Order order = orderMapper.selectById(orderId);
