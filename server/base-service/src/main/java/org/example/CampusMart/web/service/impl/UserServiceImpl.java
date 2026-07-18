@@ -35,8 +35,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Autowired
     private UserMapper userMapper;
 
-    @Value("${minio.endpoint}")
-    private String endpoint;
     @Autowired
     private PictureService pictureService;
 

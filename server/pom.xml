@@ -30,8 +30,8 @@
         <swagger.version>2.9.2</swagger.version>
         <jwt.version>0.11.2</jwt.version>
         <easycaptcha.version>1.6.2</easycaptcha.version>
-        <minio.version>8.2.0</minio.version>
         <knife4j.version>4.1.0</knife4j.version>
+        <aliyun.oss.version>3.17.4</aliyun.oss.version>
         <aliyun.sms.version>2.0.23</aliyun.sms.version>
         <alipay-sdk.version>4.38.10.ALL</alipay-sdk.version>
     </properties>
@@ -83,12 +83,12 @@
                 <version>${easycaptcha.version}</version>
             </dependency>
 
-            <!--对象存储，用于存储图像等非结构化数据-->
-            <!--官方文档：https://min.io/docs/minio/linux/developers/minio-drivers.html?ref=docs#java-sdk -->
+            <!--阿里云对象存储 OSS-->
+            <!--官方文档：https://help.aliyun.com/document_detail/32008.html -->
             <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
             </dependency>
 
             <!--阿里云短信客户端，用于发送短信验证码-->

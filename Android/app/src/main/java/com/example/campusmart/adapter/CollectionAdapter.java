@@ -8,32 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.example.campusmart.R;
+import com.example.campusmart.entity.Goods;
 import java.util.List;
 
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.GoodsViewHolder> {
-    public static class Goods {
-        public int imgRes;
-        public String title;
-        public String desc;
-        public String newDegree;
-        public String price;
 
-        public Goods(int imgRes, String title, String desc, String newDegree, String price) {
-            this.imgRes = imgRes;
-            this.title = title;
-            this.desc = desc;
-            this.newDegree = newDegree;
-            this.price = price;
-        }
+    public interface OnButtonClickListener {
+        void onDeleteClick(int position);
+        void onItemClick(int position);
     }
 
     private List<Goods> goodsList;
     private OnButtonClickListener listener;
-
-    public interface OnButtonClickListener {
-        void onDeleteClick(int position);
-    }
 
     public CollectionAdapter(List<Goods> goodsList, OnButtonClickListener listener) {
         this.goodsList = goodsList;
@@ -51,12 +39,21 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Go
     @Override
     public void onBindViewHolder(@NonNull GoodsViewHolder holder, int position) {
         Goods goods = goodsList.get(position);
-        holder.ivGoodsImg.setImageResource(goods.imgRes);
-        holder.tvTitle.setText(goods.title);
-        holder.tvDesc.setText(goods.desc);
-        holder.tvNewDegree.setText(goods.newDegree);
-        holder.tvPrice.setText(goods.price);
-        holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(position));
+        holder.tvTitle.setText(goods.getTitle() != null ? goods.getTitle() : "Unknown");
+        holder.tvDesc.setText(goods.getItemDescription() != null ? goods.getItemDescription() : "");
+        holder.tvNewDegree.setText(goods.getAppearance() != null ? goods.getAppearance() : "");
+        holder.tvPrice.setText("¥ " + goods.getPrice());
+
+        String imageUrl = null;
+        // Goods entity does not have pictureURL, fallback to placeholder
+        holder.ivGoodsImg.setImageResource(R.drawable.placeholder);
+
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) listener.onDeleteClick(position);
+        });
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(position);
+        });
     }
 
     @Override
