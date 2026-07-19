@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Date calcPayTimeout() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 30);
+        cal.add(Calendar.MINUTE, 30);
         return cal.getTime();
     }
 }

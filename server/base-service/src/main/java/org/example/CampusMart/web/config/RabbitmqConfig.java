@@ -27,8 +27,8 @@ public class RabbitmqConfig {
     public static final String ORDER_DEAD_QUEUE = "order.dead.queue";
     public static final String ORDER_DEAD_ROUTING_KEY = "order.dead.key";
 
-    // 30 秒，单位毫秒，与订单支付超时时间保持一致（测试用，生产环境请改回 30 分钟）
-    public static final long ORDER_PAY_TIMEOUT_MILLIS = 30 * 1000;
+    // 30 分钟，单位毫秒，与订单支付超时时间保持一致
+    public static final long ORDER_PAY_TIMEOUT_MILLIS = 30 * 60 * 1000;
 
     @Bean("orderDelayExchange")
     public DirectExchange orderDelayExchange() {

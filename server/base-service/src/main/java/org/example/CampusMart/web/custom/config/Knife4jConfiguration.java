@@ -62,4 +62,52 @@ public class Knife4jConfiguration {
                         "/app/messages/**"
                 ).build();
     }
+
+    @Bean
+    public GroupedOpenApi orderAPI() {
+        return GroupedOpenApi.builder().group("订单交易").
+                pathsToMatch(
+                        "/app/orders/**"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi paymentAPI() {
+        return GroupedOpenApi.builder().group("支付单").
+                pathsToMatch(
+                        "/app/payments/**"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi walletAPI() {
+        return GroupedOpenApi.builder().group("钱包").
+                pathsToMatch(
+                        "/app/wallet/**"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi alipayAPI() {
+        return GroupedOpenApi.builder().group("支付宝绑定").
+                pathsToMatch(
+                        "/app/alipay/**"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi likeAPI() {
+        return GroupedOpenApi.builder().group("商品点赞").
+                pathsToMatch(
+                        "/app/like/**"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi collectionAPI() {
+        return GroupedOpenApi.builder().group("商品收藏").
+                pathsToMatch(
+                        "/app/collection/**"
+                ).build();
+    }
 }
