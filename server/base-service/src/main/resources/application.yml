@@ -6,7 +6,10 @@ spring:
     name: base-service
   profiles:
     active: dev
+  cache:
+    type: redis
   data:
+    # Redis 配置：Spring Cache 与 Redisson 共用此配置
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
