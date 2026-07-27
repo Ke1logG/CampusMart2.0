@@ -8,11 +8,11 @@ import org.example.CampusMart.web.service.GoodsService;
 import org.example.CampusMart.web.mapper.GoodsMapper;
 import org.example.CampusMart.web.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
 
 /**
 * @author a32271
@@ -23,54 +23,87 @@ import java.util.concurrent.TimeUnit;
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
     implements GoodsService{
 
-    private static final String GOODS_DETAIL_KEY_PREFIX = "goods:detail:";
-    private static final long GOODS_DETAIL_TIMEOUT = 30;
-
     @Autowired
     private GoodsMapper goodsMapper;
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-
     @Override
+    @Cacheable(value = "goods:detail", key = "#id", sync = true)
     public Goods getById(Serializable id) {
-        String key = GOODS_DETAIL_KEY_PREFIX + id;
-        Goods goods = (Goods) redisTemplate.opsForValue().get(key);
-        if (goods != null) {
-            return goods;
-        }
-        goods = super.getById(id);
-        if (goods != null) {
-            redisTemplate.opsForValue().set(key, goods, GOODS_DETAIL_TIMEOUT, TimeUnit.MINUTES);
-        }
-        return goods;
+        return super.getById(id);
     }
 
+    /*
+     * 集群环境下防止缓存击穿的 Redisson 分布式锁方案（已保留，供后续扩展）。
+     * 单体环境下 Spring Cache 的 sync=true 已能满足同一 JVM 内的并发控制需求。
+     */
+//    @Autowired
+//    private RedissonClient redissonClient;
+//
+//    private static final String GOODS_DETAIL_KEY_PREFIX = "goods:detail:";
+//    private static final String GOODS_DETAIL_LOCK_PREFIX = "lock:goods:detail:";
+//    private static final long GOODS_DETAIL_TIMEOUT = 30;
+//
+//    @Override
+//    public Goods getById(Serializable id) {
+//        String key = GOODS_DETAIL_KEY_PREFIX + id;
+//        RBucket<Goods> bucket = redissonClient.getBucket(key);
+//
+//        // 1. 先查缓存（包括缓存的 null 值）
+//        Goods goods = bucket.get();
+//        if (goods != null || bucket.isExists()) {
+//            return goods;
+//        }
+//
+//        // 2. 缓存未命中，尝试获取分布式锁
+//        String lockKey = GOODS_DETAIL_LOCK_PREFIX + id;
+//        RLock lock = redissonClient.getLock(lockKey);
+//        try {
+//            // 最多等待 3 秒；不指定 leaseTime，启用 Redisson 看门狗自动续期
+//            if (lock.tryLock(3, TimeUnit.SECONDS)) {
+//                try {
+//                    // 3. 双重检查：其他线程可能已查询并写入缓存
+//                    goods = bucket.get();
+//                    if (goods != null || bucket.isExists()) {
+//                        return goods;
+//                    }
+//
+//                    // 4. 查询数据库
+//                    goods = super.getById(id);
+//
+//                    // 5. 写入缓存，null 值也会缓存（缓存穿透防护）
+//                    bucket.set(goods, GOODS_DETAIL_TIMEOUT, TimeUnit.MINUTES);
+//                    return goods;
+//                } finally {
+//                    if (lock.isHeldByCurrentThread()) {
+//                        lock.unlock();
+//                    }
+//                }
+//            } else {
+//                // 6. 获取锁失败，降级直接查数据库
+//                return super.getById(id);
+//            }
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//            return super.getById(id);
+//        }
+//    }
+
     @Override
+    @CacheEvict(value = "goods:detail", key = "#entity.goodID")
     public boolean save(Goods entity) {
-        boolean result = super.save(entity);
-        if (result && entity.getGoodID() != null) {
-            redisTemplate.delete(GOODS_DETAIL_KEY_PREFIX + entity.getGoodID());
-        }
-        return result;
+        return super.save(entity);
     }
 
     @Override
+    @CacheEvict(value = "goods:detail", key = "#entity.goodID")
     public boolean updateById(Goods entity) {
-        boolean result = super.updateById(entity);
-        if (result && entity.getGoodID() != null) {
-            redisTemplate.delete(GOODS_DETAIL_KEY_PREFIX + entity.getGoodID());
-        }
-        return result;
+        return super.updateById(entity);
     }
 
     @Override
+    @CacheEvict(value = "goods:detail", key = "#id")
     public boolean removeById(Serializable id) {
-        boolean result = super.removeById(id);
-        if (result) {
-            redisTemplate.delete(GOODS_DETAIL_KEY_PREFIX + id);
-        }
-        return result;
+        return super.removeById(id);
     }
 
     @Override
@@ -89,7 +122,3 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
     }
 
 }
-
-
-
-
