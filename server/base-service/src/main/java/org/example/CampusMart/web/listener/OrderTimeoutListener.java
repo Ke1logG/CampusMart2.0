@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.CampusMart.model.entity.Order;
 import org.example.CampusMart.web.config.RabbitmqConfig;
 import org.example.CampusMart.web.mapper.OrderMapper;
+import org.example.CampusMart.web.service.PaymentService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,9 @@ public class OrderTimeoutListener {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private PaymentService paymentService;
+
     @RabbitListener(queues = RabbitmqConfig.ORDER_DEAD_QUEUE)
     public void handleOrderTimeout(String orderId) {
         log.info("收到订单超时消息，orderId={}", orderId);
@@ -40,6 +44,8 @@ public class OrderTimeoutListener {
             order.setStatus("CANCELLED");
             order.setUpdateTime(new Date());
             orderMapper.updateById(order);
+            // 同步关闭该订单下未支付的支付单，防止订单取消后仍被支付
+            paymentService.closePendingPaymentByOrderId(Long.valueOf(orderId));
             log.info("订单已自动取消，orderId={}", orderId);
         } catch (Exception e) {
             // 捕获异常，避免抛出后触发框架重试或消息重新入队形成死循环

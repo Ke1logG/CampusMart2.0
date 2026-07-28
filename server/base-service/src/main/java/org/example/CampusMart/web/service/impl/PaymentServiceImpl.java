@@ -5,6 +5,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.CampusMart.common.exception.CampusMartException;
 import org.example.CampusMart.common.result.ResultCodeEnum;
@@ -89,6 +90,19 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public void closePendingPaymentByOrderId(Long orderId) {
+        LambdaUpdateWrapper<Payment> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Payment::getOrderID, orderId)
+                .eq(Payment::getStatus, STATUS_PENDING)
+                .set(Payment::getStatus, STATUS_CLOSED)
+                .set(Payment::getUpdateTime, new Date());
+        int rows = paymentMapper.update(null, wrapper);
+        if (rows > 0) {
+            log.info("订单取消后关闭待支付支付单，orderId={}", orderId);
+        }
+    }
+
+    @Override
     public String getAlipayOrderString(Long paymentId, Long userId) throws Exception {
         Payment payment = paymentMapper.selectById(paymentId);
         if (payment == null) {
@@ -157,11 +171,18 @@ public class PaymentServiceImpl implements PaymentService {
         paymentMapper.updateById(payment);
 
         Order order = orderMapper.selectById(payment.getOrderID());
-        if (order != null) {
-            order.setStatus(ORDER_STATUS_PAID);
-            order.setUpdateTime(new Date());
-            orderMapper.updateById(order);
+        if (order == null || !"CREATED".equals(order.getStatus())) {
+            // 订单不存在或已取消/已结束，关闭支付单并结束处理，避免已取消订单被重新激活
+            log.warn("订单状态不是CREATED，关闭支付单，paymentId={}，orderId={}", paymentId, payment.getOrderID());
+            payment.setStatus(STATUS_CLOSED);
+            payment.setUpdateTime(new Date());
+            paymentMapper.updateById(payment);
+            return true;
         }
+
+        order.setStatus(ORDER_STATUS_PAID);
+        order.setUpdateTime(new Date());
+        orderMapper.updateById(order);
 
         return true;
     }

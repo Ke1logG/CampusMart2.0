@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.CampusMart.model.entity.Order;
 import org.example.CampusMart.web.mapper.OrderMapper;
+import org.example.CampusMart.web.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,9 @@ public class OrderTimeoutJob {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private PaymentService paymentService;
+
     // 兜底补偿间隔：5 分钟
     private static final long COMPENSATE_INTERVAL_MILLIS = 5 * 60 * 1000;
 
@@ -46,6 +50,8 @@ public class OrderTimeoutJob {
             order.setStatus("CANCELLED");
             order.setUpdateTime(new Date());
             orderMapper.updateById(order);
+            // 同步关闭该订单下未支付的支付单
+            paymentService.closePendingPaymentByOrderId(order.getOrderID());
         }
         log.info("兜底补偿自动关闭超时订单 {} 条", timeoutOrders.size());
     }
