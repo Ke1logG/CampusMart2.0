@@ -161,8 +161,6 @@ public class PaymentServiceImpl implements PaymentService {
             order.setStatus(ORDER_STATUS_PAID);
             order.setUpdateTime(new Date());
             orderMapper.updateById(order);
-
-            walletService.handleOrderSettled(order.getSellerID(), order.getOrderID(), order.getAmount());
         }
 
         return true;
