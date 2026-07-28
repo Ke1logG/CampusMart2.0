@@ -25,6 +25,14 @@ spring:
     listener:
       simple:
         acknowledge-mode: auto
+        # 消费失败时不重新入队，避免异常消息无限循环消费
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 1000ms
+          multiplier: 2
+          max-interval: 10000ms
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: ${MYSQL_URL:jdbc:mysql://localhost:3306/campusmart?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8}

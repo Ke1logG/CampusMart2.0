@@ -1,6 +1,8 @@
 package org.example.CampusMart.web.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,5 +66,19 @@ public class RabbitmqConfig {
     public Binding orderDeadBinding(@Qualifier("orderDeadQueue") Queue queue,
                                     @Qualifier("orderDeadExchange") DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ORDER_DEAD_ROUTING_KEY);
+    }
+
+    /**
+     * 配置 RabbitTemplate，发送消息时设置 deliveryMode 为 PERSISTENT，
+     * 确保消息持久化到磁盘，避免 RabbitMQ 重启导致消息丢失。
+     */
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setBeforePublishPostProcessors(msg -> {
+            msg.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            return msg;
+        });
+        return rabbitTemplate;
     }
 }

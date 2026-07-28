@@ -26,20 +26,24 @@ public class OrderTimeoutListener {
     @RabbitListener(queues = RabbitmqConfig.ORDER_DEAD_QUEUE)
     public void handleOrderTimeout(String orderId) {
         log.info("收到订单超时消息，orderId={}", orderId);
+        try {
+            Order order = orderMapper.selectById(orderId);
+            if (order == null) {
+                log.warn("订单不存在，orderId={}", orderId);
+                return;
+            }
+            if (!"CREATED".equals(order.getStatus())) {
+                log.info("订单状态不是 CREATED，无需取消，orderId={}，status={}", orderId, order.getStatus());
+                return;
+            }
 
-        Order order = orderMapper.selectById(orderId);
-        if (order == null) {
-            log.warn("订单不存在，orderId={}", orderId);
-            return;
+            order.setStatus("CANCELLED");
+            order.setUpdateTime(new Date());
+            orderMapper.updateById(order);
+            log.info("订单已自动取消，orderId={}", orderId);
+        } catch (Exception e) {
+            // 捕获异常，避免抛出后触发框架重试或消息重新入队形成死循环
+            log.error("处理订单超时消息异常，orderId={}", orderId, e);
         }
-        if (!"CREATED".equals(order.getStatus())) {
-            log.info("订单状态不是 CREATED，无需取消，orderId={}，status={}", orderId, order.getStatus());
-            return;
-        }
-
-        order.setStatus("CANCELLED");
-        order.setUpdateTime(new Date());
-        orderMapper.updateById(order);
-        log.info("订单已自动取消，orderId={}", orderId);
     }
 }

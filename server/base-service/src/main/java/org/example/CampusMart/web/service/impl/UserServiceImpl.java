@@ -15,6 +15,8 @@ import org.example.CampusMart.web.vo.RegisterVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
 * @author a32271
@@ -85,6 +88,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         return JwtUtil.createToken(user.getUserID(), user.getUsername());
+    }
+
+    @Override
+    @Cacheable(value = "user:info", key = "#id", sync = true)
+    public User getById(Serializable id) {
+        return super.getById(id);
+    }
+
+    @Override
+    @CacheEvict(value = "user:info", key = "#entity.userID")
+    public boolean save(User entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @CacheEvict(value = "user:info", key = "#entity.userID")
+    public boolean updateById(User entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @CacheEvict(value = "user:info", key = "#id")
+    public boolean removeById(Serializable id) {
+        return super.removeById(id);
     }
 }
 
