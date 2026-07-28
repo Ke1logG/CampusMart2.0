@@ -53,13 +53,9 @@ public class WalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWallet>
     @Transactional(rollbackFor = Exception.class)
     public void handleOrderSettled(Long sellerId, Long orderId, BigDecimal amount) {
         UserWallet wallet = getWallet(sellerId);
-        boolean success = lambdaUpdate()
-                .eq(UserWallet::getUserID, sellerId)
-                .eq(UserWallet::getVersion, wallet.getVersion())
-                .set(UserWallet::getBalance, wallet.getBalance().add(amount))
-                .set(UserWallet::getVersion, wallet.getVersion() + 1)
-                .update();
-        if (!success) {
+        wallet.setBalance(wallet.getBalance().add(amount));
+        int success = userWalletMapper.updateById(wallet);
+        if (success == 0) {
             throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "钱包更新失败，请重试");
         }
 
@@ -93,13 +89,9 @@ public class WalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWallet>
             throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "余额不足");
         }
 
-        boolean success = lambdaUpdate()
-                .eq(UserWallet::getUserID, userId)
-                .eq(UserWallet::getVersion, wallet.getVersion())
-                .set(UserWallet::getBalance, wallet.getBalance().subtract(amount))
-                .set(UserWallet::getVersion, wallet.getVersion() + 1)
-                .update();
-        if (!success) {
+        wallet.setBalance(wallet.getBalance().subtract(amount));
+        int success = userWalletMapper.updateById(wallet);
+        if (success == 0) {
             throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "钱包更新失败，请重试");
         }
 
