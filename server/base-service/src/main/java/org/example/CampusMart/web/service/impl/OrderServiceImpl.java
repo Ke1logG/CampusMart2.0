@@ -58,6 +58,14 @@ public class OrderServiceImpl implements OrderService {
         if (goods.getPublishUserID().equals(buyerId)) {
             throw new CampusMartException(ResultCodeEnum.ILLEGAL_REQUEST.getCode(), "不能购买自己发布的商品");
         }
+        LambdaQueryWrapper<Order> existWrapper = new LambdaQueryWrapper<>();
+        existWrapper.eq(Order::getBuyerID, buyerId)
+                    .eq(Order::getGoodID, goodId)
+                    .eq(Order::getStatus, "CREATED");
+        Order existingOrder = orderMapper.selectOne(existWrapper);
+        if (existingOrder != null) {
+            return convertToVo(existingOrder);
+        }
 
         Order order = new Order();
         order.setGoodID(goodId);
@@ -114,20 +122,33 @@ public class OrderServiceImpl implements OrderService {
         return convertToVo(order);
     }
 
+    /*
+     * 旧实现，存在 N+1 查询问题，保留用于对比
+     */
+//    @Override
+//    public List<OrderVo> listBuyerOrders(Long userId) {
+//        LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.eq(Order::getBuyerID, userId).orderByDesc(Order::getCreateTime);
+//        List<Order> list = orderMapper.selectList(wrapper);
+//        return list.stream().map(this::convertToVo).collect(Collectors.toList());
+//    }
+//
+//    @Override
+//    public List<OrderVo> listSellerOrders(Long userId) {
+//        LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.eq(Order::getSellerID, userId).orderByDesc(Order::getCreateTime);
+//        List<Order> list = orderMapper.selectList(wrapper);
+//        return list.stream().map(this::convertToVo).collect(Collectors.toList());
+//    }
+
     @Override
     public List<OrderVo> listBuyerOrders(Long userId) {
-        LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Order::getBuyerID, userId).orderByDesc(Order::getCreateTime);
-        List<Order> list = orderMapper.selectList(wrapper);
-        return list.stream().map(this::convertToVo).collect(Collectors.toList());
+        return orderMapper.selectBuyerOrderListWithGoods(userId);
     }
 
     @Override
     public List<OrderVo> listSellerOrders(Long userId) {
-        LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Order::getSellerID, userId).orderByDesc(Order::getCreateTime);
-        List<Order> list = orderMapper.selectList(wrapper);
-        return list.stream().map(this::convertToVo).collect(Collectors.toList());
+        return orderMapper.selectSellerOrderListWithGoods(userId);
     }
 
     private Order getAndCheck(Long orderId, Long userId) {
@@ -148,7 +169,7 @@ public class OrderServiceImpl implements OrderService {
         if (goods != null) {
             vo.setGoodTitle(goods.getTitle());
             LambdaQueryWrapper<Picture> pictureWrapper = new LambdaQueryWrapper<>();
-            pictureWrapper.eq(Picture::getGoodID, goods.getGoodID()).orderByAsc(Picture::getPictureID).last("limit 1");
+            pictureWrapper.eq(Picture::getGoodID, goods.getGoodID()).orderByDesc(Picture::getPictureID).last("limit 1");
             Picture picture = pictureMapper.selectOne(pictureWrapper);
             if (picture != null) {
                 vo.setGoodPictureURL(picture.getPictureURL());

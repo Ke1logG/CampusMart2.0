@@ -34,18 +34,31 @@ spring:
           multiplier: 2
           max-interval: 10000ms
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL:jdbc:mysql://localhost:3306/campusmart?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8}
     username: ${MYSQL_USERNAME:root}
     password: ${MYSQL_PASSWORD:}
-    hikari:
-      connection-test-query: SELECT 1 # 自动检测连接
-      connection-timeout: 60000 #数据库连接超时时间,默认30秒
-      idle-timeout: 500000 #空闲连接存活最大时间，默认600000（10分钟）
-      max-lifetime: 540000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-      maximum-pool-size: 12 #连接池最大连接数，默认是10
-      minimum-idle: 10 #最小空闲连接数量
-      pool-name: SPHHikariPool # 连接池名称
+    druid:
+      initial-size: 10
+      min-idle: 10
+      max-active: 20
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 开启 SQL 监控和防注入过滤器
+      filters: stat,wall
+      # 合并 SQL 并设置慢 SQL 阈值为 1000ms
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
+      stat:
+        log-slow-sql: true
+        slow-sql-millis: 1000
+      wall:
+        config:
+          multi-statement-allow: true
   servlet:
     multipart:
       max-file-size: 10MB

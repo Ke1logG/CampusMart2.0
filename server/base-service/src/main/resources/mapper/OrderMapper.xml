@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.CampusMart.web.mapper.OrderMapper">
+
+    <resultMap id="OrderVoResultMap" type="org.example.CampusMart.web.vo.OrderVo">
+        <result column="orderID" property="orderID"/>
+        <result column="goodID" property="goodID"/>
+        <result column="goodTitle" property="goodTitle"/>
+        <result column="goodPictureURL" property="goodPictureURL"/>
+        <result column="buyerID" property="buyerID"/>
+        <result column="sellerID" property="sellerID"/>
+        <result column="amount" property="amount"/>
+        <result column="status" property="status"/>
+        <result column="payTimeout" property="payTimeout"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <select id="selectBuyerOrderListWithGoods" resultMap="OrderVoResultMap">
+        SELECT
+            o.orderID,
+            o.goodID,
+            o.buyerID,
+            o.sellerID,
+            o.amount,
+            o.status,
+            o.payTimeout,
+            o.createTime,
+            g.title AS goodTitle,
+            (
+                SELECT p.pictureURL
+                FROM picture p
+                WHERE p.goodID = g.goodID
+                ORDER BY p.pictureID DESC
+                LIMIT 1
+            ) AS goodPictureURL
+        FROM orders o
+        LEFT JOIN goods g ON o.goodID = g.goodID
+        WHERE o.buyerID = #{buyerId}
+        ORDER BY o.createTime DESC
+    </select>
+
+    <select id="selectSellerOrderListWithGoods" resultMap="OrderVoResultMap">
+        SELECT
+            o.orderID,
+            o.goodID,
+            o.buyerID,
+            o.sellerID,
+            o.amount,
+            o.status,
+            o.payTimeout,
+            o.createTime,
+            g.title AS goodTitle,
+            (
+                SELECT p.pictureURL
+                FROM picture p
+                WHERE p.goodID = g.goodID
+                ORDER BY p.pictureID DESC
+                LIMIT 1
+            ) AS goodPictureURL
+        FROM orders o
+        LEFT JOIN goods g ON o.goodID = g.goodID
+        WHERE o.sellerID = #{sellerId}
+        ORDER BY o.createTime DESC
+    </select>
+
+</mapper>

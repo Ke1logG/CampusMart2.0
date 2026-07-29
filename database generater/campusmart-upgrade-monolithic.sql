@@ -117,3 +117,13 @@ CREATE TABLE IF NOT EXISTS wallet_flows
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COMMENT = '钱包流水表';
+
+-- 9. 优化慢查询：添加联合索引
+-- 买家订单列表：按 buyerID 过滤，status 筛选，createTime 排序
+ALTER TABLE orders ADD INDEX idx_buyer_status_createtime (buyerID, status, createTime);
+
+-- 卖家订单列表：按 sellerID 过滤，status 筛选，createTime 排序
+ALTER TABLE orders ADD INDEX idx_seller_status_createtime (sellerID, status, createTime);
+
+-- 支付单按订单查询状态
+ALTER TABLE payments ADD INDEX idx_orderid_status (orderID, status);

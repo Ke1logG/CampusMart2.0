@@ -32,7 +32,13 @@
         JOIN
         `user` u ON g.publishUserID = u.userID
         LEFT JOIN
-        picture p ON g.goodID = p.goodID
+        (
+            SELECT goodID, MAX(pictureID) AS pictureID
+            FROM picture
+            GROUP BY goodID
+        ) latest ON g.goodID = latest.goodID
+        LEFT JOIN
+        picture p ON latest.pictureID = p.pictureID
         ORDER BY
         g.publishTime DESC
     </select>
@@ -53,7 +59,13 @@
         JOIN
         `user` u ON g.publishUserID = u.userID
         LEFT JOIN
-        picture p ON g.goodID = p.goodID
+        (
+            SELECT goodID, MAX(pictureID) AS pictureID
+            FROM picture
+            GROUP BY goodID
+        ) latest ON g.goodID = latest.goodID
+        LEFT JOIN
+        picture p ON latest.pictureID = p.pictureID
         ${ew.customSqlSegment}
         ORDER BY g.publishTime DESC
     </select>
@@ -74,7 +86,13 @@
         JOIN
         `user` u ON g.publishUserID = u.userID
         LEFT JOIN
-        picture p ON g.goodID = p.goodID
+        (
+            SELECT goodID, MAX(pictureID) AS pictureID
+            FROM picture
+            GROUP BY goodID
+        ) latest ON g.goodID = latest.goodID
+        LEFT JOIN
+        picture p ON latest.pictureID = p.pictureID
         ${ew.customSqlSegment}
         ORDER BY g.publishTime DESC
     </select>
