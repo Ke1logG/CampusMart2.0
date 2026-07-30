@@ -51,7 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         user = new User();
         BeanUtils.copyProperties(registerVo,user);
-        user.setNickname("User"+ CodeUtil.geyRandomCode(5));
+        user.setNickname("User"+ CodeUtil.getRandomCode(5));
         user.setProfileSignature("hello everyone");
         try {
             ClassPathResource resource = new ClassPathResource("default_avatar.jpeg");
@@ -64,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                     inputStream
             );
 
-            // 3. 调用 upload 方法上传
+            // 调用 upload 方法上传
             String url = pictureService.upload(multipartFile);
             user.setAvatarURL(url);
         } catch (IOException e) {

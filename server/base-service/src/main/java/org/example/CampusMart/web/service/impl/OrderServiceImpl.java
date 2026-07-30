@@ -53,10 +53,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderVo createOrder(Long buyerId, Long goodId) {
         Goods goods = goodsService.getById(goodId);
         if (goods == null) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "商品不存在");
+            throw new CampusMartException(ResultCodeEnum.GOODS_NOT_FOUND);
         }
         if (goods.getPublishUserID().equals(buyerId)) {
-            throw new CampusMartException(ResultCodeEnum.ILLEGAL_REQUEST.getCode(), "不能购买自己发布的商品");
+            throw new CampusMartException(ResultCodeEnum.GOODS_SELF_PURCHASE);
         }
         LambdaQueryWrapper<Order> existWrapper = new LambdaQueryWrapper<>();
         existWrapper.eq(Order::getBuyerID, buyerId)
@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
     public boolean cancelOrder(Long userId, Long orderId) {
         Order order = getAndCheck(orderId, userId);
         if (!STATUS_CREATED.equals(order.getStatus())) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "只能取消未支付的订单");
+            throw new CampusMartException(ResultCodeEnum.ORDER_CANCEL_NOT_ALLOWED);
         }
         order.setStatus(STATUS_CANCELLED);
         order.setUpdateTime(new Date());
@@ -106,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
     public boolean confirmReceipt(Long userId, Long orderId) {
         Order order = getAndCheck(orderId, userId);
         if (!STATUS_PAID.equals(order.getStatus())) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "只能确认已支付的订单");
+            throw new CampusMartException(ResultCodeEnum.ORDER_CONFIRM_NOT_ALLOWED);
         }
         order.setStatus(STATUS_SETTLED);
         order.setUpdateTime(new Date());
@@ -154,10 +154,10 @@ public class OrderServiceImpl implements OrderService {
     private Order getAndCheck(Long orderId, Long userId) {
         Order order = orderMapper.selectById(orderId);
         if (order == null) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "订单不存在");
+            throw new CampusMartException(ResultCodeEnum.ORDER_NOT_FOUND);
         }
         if (!order.getBuyerID().equals(userId) && !order.getSellerID().equals(userId)) {
-            throw new CampusMartException(ResultCodeEnum.ILLEGAL_REQUEST.getCode(), "无权查看该订单");
+            throw new CampusMartException(ResultCodeEnum.ORDER_NO_PERMISSION);
         }
         return order;
     }

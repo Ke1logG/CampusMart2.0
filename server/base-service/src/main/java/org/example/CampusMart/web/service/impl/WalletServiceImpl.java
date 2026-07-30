@@ -56,7 +56,7 @@ public class WalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWallet>
         wallet.setBalance(wallet.getBalance().add(amount));
         int success = userWalletMapper.updateById(wallet);
         if (success == 0) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "钱包更新失败，请重试");
+            throw new CampusMartException(ResultCodeEnum.WALLET_UPDATE_FAILED);
         }
 
         UserWallet updated = getWallet(sellerId);
@@ -82,17 +82,17 @@ public class WalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWallet>
     @Transactional(rollbackFor = Exception.class)
     public boolean withdraw(Long userId, BigDecimal amount, String alipayAccount) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new CampusMartException(ResultCodeEnum.PARAM_ERROR.getCode(), "提现金额必须大于0");
+            throw new CampusMartException(ResultCodeEnum.WITHDRAW_AMOUNT_INVALID);
         }
         UserWallet wallet = getWallet(userId);
         if (wallet.getBalance().compareTo(amount) < 0) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "余额不足");
+            throw new CampusMartException(ResultCodeEnum.WALLET_BALANCE_INSUFFICIENT);
         }
 
         wallet.setBalance(wallet.getBalance().subtract(amount));
         int success = userWalletMapper.updateById(wallet);
         if (success == 0) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "钱包更新失败，请重试");
+            throw new CampusMartException(ResultCodeEnum.WALLET_UPDATE_FAILED);
         }
 
         UserWallet updated = getWallet(userId);

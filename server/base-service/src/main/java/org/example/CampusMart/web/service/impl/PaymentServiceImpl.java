@@ -63,13 +63,13 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment createPayment(Long orderId, Long userId) {
         Order order = orderMapper.selectById(orderId);
         if (order == null) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "订单不存在");
+            throw new CampusMartException(ResultCodeEnum.ORDER_NOT_FOUND);
         }
         if (!order.getBuyerID().equals(userId)) {
-            throw new CampusMartException(ResultCodeEnum.ILLEGAL_REQUEST.getCode(), "无权支付该订单");
+            throw new CampusMartException(ResultCodeEnum.ORDER_NO_PERMISSION);
         }
         if (!"CREATED".equals(order.getStatus())) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "订单状态不正确");
+            throw new CampusMartException(ResultCodeEnum.ORDER_STATUS_ERROR);
         }
 
         Payment exist = getByOrderId(orderId);
@@ -106,13 +106,13 @@ public class PaymentServiceImpl implements PaymentService {
     public String getAlipayOrderString(Long paymentId, Long userId) throws Exception {
         Payment payment = paymentMapper.selectById(paymentId);
         if (payment == null) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "支付单不存在");
+            throw new CampusMartException(ResultCodeEnum.PAYMENT_NOT_FOUND);
         }
         if (!payment.getUserID().equals(userId)) {
-            throw new CampusMartException(ResultCodeEnum.ILLEGAL_REQUEST.getCode(), "无权操作该支付单");
+            throw new CampusMartException(ResultCodeEnum.PAYMENT_NO_PERMISSION);
         }
         if (!STATUS_PENDING.equals(payment.getStatus())) {
-            throw new CampusMartException(ResultCodeEnum.DATA_ERROR.getCode(), "支付单状态不正确");
+            throw new CampusMartException(ResultCodeEnum.PAYMENT_STATUS_ERROR);
         }
 
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
