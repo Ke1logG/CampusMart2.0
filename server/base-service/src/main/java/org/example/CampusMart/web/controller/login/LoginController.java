@@ -11,6 +11,7 @@ import org.example.CampusMart.web.service.UserService;
 import org.example.CampusMart.web.vo.LoginVo;
 import org.example.CampusMart.web.vo.RegisterVo;
 import org.springframework.beans.BeanUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +24,14 @@ public class LoginController {
 
     @Operation(summary = "用户登录")
     @PostMapping("/login")
-    public Result<String> login(@RequestBody LoginVo loginVo) {
+    public Result<String> login(@Valid @RequestBody LoginVo loginVo) {
         String jwt = userService.login(loginVo);
         return Result.ok(jwt);
     }
 
     @Operation(summary = "用户注册")
     @PostMapping("/register")
-    public Result register(@RequestBody RegisterVo registerVo) {
+    public Result register(@Valid @RequestBody RegisterVo registerVo) {
         userService.register(registerVo);
         return Result.ok();
     }
