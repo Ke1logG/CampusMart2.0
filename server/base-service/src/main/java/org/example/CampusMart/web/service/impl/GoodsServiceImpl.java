@@ -50,7 +50,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
     @Autowired
     private RedissonClient redissonClient;
 
-    private static final String GOODS_DETAIL_KEY_PREFIX = "goods:detail:";
+    private static final String GOODS_DETAIL_KEY_PREFIX = "goods:detail::";
     private static final String GOODS_DETAIL_LOCK_PREFIX = "lock:goods:detail:";
 
     @Override
@@ -70,8 +70,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
         String lockkey = GOODS_DETAIL_LOCK_PREFIX + id;
         RLock lock = redissonClient.getLock(lockkey);
         try{
-            //获取锁加看门狗续期
-            boolean isLocked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+            //获取锁加定时删除
+            boolean isLocked = lock.tryLock(100, 5000, TimeUnit.MILLISECONDS);
             if(!isLocked){
                 Thread.sleep(50);
                 return getById(id); //自旋重试
@@ -95,7 +95,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
                 if(goods != null){
                     redisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(goods), ttl, TimeUnit.MINUTES);
                 }else{
-                    redisTemplate.opsForValue().set(key, "", ttl, TimeUnit.MINUTES);
+                    redisTemplate.opsForValue().set(key, "", 5, TimeUnit.MINUTES);
                 }
                 return goods;
             }finally{

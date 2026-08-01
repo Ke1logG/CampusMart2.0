@@ -2,10 +2,11 @@ package org.example.CampusMart;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = RedissonAutoConfiguration.class)
 @EnableScheduling
 @MapperScan("org.example.CampusMart.web.mapper")
 public class WebApplication {
