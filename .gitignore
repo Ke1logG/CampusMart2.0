@@ -1,9 +1,9 @@
-
+# =========================
+# 只保留后端代码（server/）与数据库脚本
+# =========================
 /Android/
 /apks/
-/database generater/
 /最终效果演示视频.mp4
-/README.md
 .DS_Store
 
 # Maven编译产物
