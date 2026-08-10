@@ -22,11 +22,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-/**
-* @author a32271
-* @description 针对表【goods】的数据库操作Service实现
-* @createDate 2025-12-27 23:08:03
-*/
+
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
     implements GoodsService{
@@ -35,8 +31,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
     private GoodsMapper goodsMapper;
 
 /*
-     
-    单体环境下 Spring Cache 的 sync=true 已能满足同一 JVM 内的并发控制需求。
       
     @Override
     @Cacheable(value = "goods:detail", key = "#id", sync = true)

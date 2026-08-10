@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.example.CampusMart.common.exception.CampusMartException;
 import org.example.CampusMart.common.result.Result;
+import org.example.CampusMart.common.result.ResultCodeEnum;
 import org.example.CampusMart.model.entity.Goods;
 import org.example.CampusMart.web.service.GoodsService;
 import org.example.CampusMart.web.vo.GoodsVo;
@@ -50,7 +52,15 @@ public class GoodsController {
     @Operation(summary = "添加商品")
     @PostMapping("/add")
     public Result addGoods(@RequestBody Goods goods) {
-        boolean result = goodsService.save(goods);
+        goodsService.save(goods);
+        Long price = goods.getPrice();
+        String title = goods.getTitle();
+        if(price<=0){
+            throw new CampusMartException(ResultCodeEnum.GOODS_PRICE_ILLEGAL);
+        }
+        if(title == null || title.isBlank()){
+            throw new CampusMartException(ResultCodeEnum.GOODS_TITLE_EMPTY);
+        }
         long newGoodsID = goods.getGoodID();
         return Result.ok(newGoodsID);
     }

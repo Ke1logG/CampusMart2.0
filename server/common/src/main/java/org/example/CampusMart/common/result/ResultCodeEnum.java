@@ -2,9 +2,6 @@ package org.example.CampusMart.common.result;
 
 import lombok.Getter;
 
-/**
- * 统一返回结果状态信息类
- */
 @Getter
 public enum ResultCodeEnum {
 
@@ -31,6 +28,8 @@ public enum ResultCodeEnum {
     // 商品模块 4xx
     GOODS_NOT_FOUND(401, "商品不存在"),
     GOODS_SELF_PURCHASE(402, "不能购买自己发布的商品"),
+    GOODS_PRICE_ILLEGAL(403,"商品价格小于或等于零"),
+    GOODS_TITLE_EMPTY(404,"商品标题为空"),
 
     // APP 登录模块 5xx
     APP_LOGIN_AUTH(501, "未登陆"),
