@@ -11,6 +11,7 @@ import org.example.CampusMart.web.mapper.OrderMapper;
 import org.example.CampusMart.web.mapper.PictureMapper;
 import org.example.CampusMart.web.service.GoodsService;
 import org.example.CampusMart.web.service.OrderService;
+import org.example.CampusMart.web.service.PaymentService;
 import org.example.CampusMart.web.service.WalletService;
 import org.example.CampusMart.web.vo.OrderVo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -42,6 +43,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private PaymentService paymentService;
 
     private static final String STATUS_CREATED = "CREATED";
     private static final String STATUS_PAID = "PAID";
@@ -98,6 +102,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(STATUS_CANCELLED);
         order.setUpdateTime(new Date());
         orderMapper.updateById(order);
+        paymentService.closePendingPaymentByOrderId(orderId);
         return true;
     }
 
