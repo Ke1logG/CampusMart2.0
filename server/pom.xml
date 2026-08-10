@@ -14,14 +14,14 @@
         <module>base-service</module>
     </modules>
 
-    <!-- 继承Spring Boot父项目 -->
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.5</version>
     </parent>
 
-    <!-- 注意：直接替换pom文件中原有的properties -->
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -41,7 +41,6 @@
     <dependencyManagement>
         <dependencies>
             <!--mybatis-plus-->
-            <!--官方文档：https://baomidou.com/pages/bab2db/ -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -49,7 +48,6 @@
             </dependency>
 
             <!--knife4j文档-->
-            <!--官方文档：https://doc.xiaominfo.com/docs/quick-start -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
@@ -57,7 +55,6 @@
             </dependency>
 
             <!--JWT登录认证相关-->
-            <!--官方文档：https://github.com/jwtk/jjwt#install-jdk-maven -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-api</artifactId>
@@ -77,7 +74,6 @@
             </dependency>
 
             <!--图形验证码-->
-            <!--官方文档：https://gitee.com/ele-admin/EasyCaptcha -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
@@ -85,15 +81,12 @@
             </dependency>
 
             <!--阿里云对象存储 OSS-->
-            <!--官方文档：https://help.aliyun.com/document_detail/32008.html -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.oss.version}</version>
             </dependency>
 
-            <!--阿里云短信客户端，用于发送短信验证码-->
-            <!--官方文档：https://help.aliyun.com/document_detail/215759.html?spm=a2c4g.215759.0.0.49f32807f4Yc0y -->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>dysmsapi20170525</artifactId>
