@@ -6,6 +6,7 @@ CampusMart 是一款面向校园场景的二手闲置物品交易平台，采用
 
 后端聚焦商品发布、订单交易、消息沟通、钱包流水等核心业务，并通过 Redis 缓存、RabbitMQ 延时队列、Redisson 分布式锁等机制保障并发安全与性能。
 
+---
 
 ## 项目亮点
 
@@ -17,7 +18,7 @@ CampusMart 是一款面向校园场景的二手闲置物品交易平台，采用
 - **MyBatis-Plus 乐观锁**：卖家钱包余额更新通过 `version` 字段控制并发
 
 
-
+---
 
 ## 技术栈
 
@@ -31,6 +32,7 @@ CampusMart 是一款面向校园场景的二手闲置物品交易平台，采用
 | **安全**   | JWT / MP 乐观锁                           | 认证与并发安全      |
 | **工具**   | Maven / Lombok / Hutool / Knife4j      | 构建、代码简化、接口文档 |
 
+---
 
 ## 项目结构
 
@@ -77,6 +79,7 @@ CampusMart/
 ├── .gitignore
 └── README.md
 ```
+---
 
 ## 后端功能模块
 
@@ -85,7 +88,9 @@ CampusMart/
 - **订单模块**：下单、订单状态流转、超时自动取消、买家/卖家订单列表
 - **支付模块**：支付状态同步、待支付订单关闭
 - **钱包模块**：余额查询、充值、消费流水、乐观锁防并发
-- **消息模块**：买卖双方消息沟通（前端轮询）、最近会话列表、系统通知
+- **消息模块**：买卖双方消息沟通（前端轮询）、最近会话列表、系统通知  
+
+---
 
 
 ## 快速开始
@@ -105,9 +110,20 @@ CampusMart/
 
 5. 启动服务  
 
-服务启动后访问：http://localhost:8080/doc.html （Knife4j 接口文档）测试
+快速测试：服务启动后访问：http://localhost:8080/doc.html （Knife4j 接口文档）测试  
+
+---  
+
+## 接口自动化测试  
+
+1. 将[API-Automation-Testing-Platform](https://github.com/Ke1logG/API-Automation-Testing-Platform)部署到本地
+2. 配置好自动化测试项目的配置
+3. 启动后端服务
+4. 终端输入：mvn clean test 执行全部测试用例
+5. 终端输入：mvn allure:serve 查看测试allure报告
 
 
+---
 
 ## 接口文档
 
