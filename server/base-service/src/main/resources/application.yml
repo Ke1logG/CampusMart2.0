@@ -92,3 +92,8 @@ alipay:
   server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
   notify-url: ${ALIPAY_NOTIFY_URL:http://localhost:8080/app/payments/alipay/notify}
   return-url: ${ALIPAY_RETURN_URL:}
+
+# 压测时只保留 OrderTimeoutListener 的错误日志
+logging:
+  level:
+    org.example.CampusMart.web.listener.OrderTimeoutListener: WARN
