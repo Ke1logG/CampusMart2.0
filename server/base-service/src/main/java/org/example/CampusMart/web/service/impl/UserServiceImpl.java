@@ -7,23 +7,16 @@ import org.example.CampusMart.common.result.ResultCodeEnum;
 import org.example.CampusMart.common.utils.CodeUtil;
 import org.example.CampusMart.common.utils.JwtUtil;
 import org.example.CampusMart.model.entity.User;
-import org.example.CampusMart.web.service.PictureService;
 import org.example.CampusMart.web.service.UserService;
 import org.example.CampusMart.web.mapper.UserMapper;
 import org.example.CampusMart.web.vo.LoginVo;
 import org.example.CampusMart.web.vo.RegisterVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 
@@ -33,9 +26,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private PictureService pictureService;
 
     @Override
     public boolean register(RegisterVo registerVo) {
@@ -49,24 +39,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtils.copyProperties(registerVo,user);
         user.setNickname("User"+ CodeUtil.getRandomCode(5));
         user.setProfileSignature("hello everyone");
-        try {
-            ClassPathResource resource = new ClassPathResource("default_avatar.jpeg");
-            InputStream inputStream = resource.getInputStream();
-
-            MultipartFile multipartFile = new MockMultipartFile(
-                    "file",
-                    "default_avatar.jpeg",
-                    "image/jpeg",
-                    inputStream
-            );
-
-            // 调用 upload 方法上传
-            String url = pictureService.upload(multipartFile);
-            user.setAvatarURL(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("读取默认头像文件失败", e);
-        }
         userMapper.insert(user);
         return true;
     }
