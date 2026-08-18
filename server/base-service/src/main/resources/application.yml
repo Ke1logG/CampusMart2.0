@@ -42,7 +42,8 @@ spring:
     druid:
       initial-size: 10
       min-idle: 10
-      max-active: 20
+      # 压测时适当增加连接数
+      max-active: 50
       max-wait: 60000
       test-while-idle: true
       test-on-borrow: false
@@ -51,10 +52,10 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       # 开启 SQL 监控和防注入过滤器
       filters: stat,wall
-      # 合并 SQL 并设置慢 SQL 阈值为 1000ms
+      # 压测时关闭慢 SQL 日志，避免日志被打爆
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
       stat:
-        log-slow-sql: true
+        log-slow-sql: false
         slow-sql-millis: 1000
       wall:
         config:
@@ -65,8 +66,7 @@ spring:
       max-request-size: 20MB
 
 mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 压测时 MyBatis 不打印 SQL（不配置 log-impl 即使用默认无输出）
   global-config:
     db-config:
       logic-delete-field: isDeleted
