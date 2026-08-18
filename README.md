@@ -34,17 +34,26 @@ CampusMart 是一款校园二手闲置物品交易平台的后端服务，基于
 
 ## 三、系统架构
 
-> 图片占位：`docs/images/architecture.png`（系统架构图，待补充）
->
-> 建议内容：Controller → Service → Mapper → MySQL 主链路，Redis / RabbitMQ 侧挂，OSS 用于文件存储，Knife4j 提供在线接口文档。
+采用经典分层架构：
+
+- **Controller**：接收前端 HTTP 请求，按模块划分为 goods、trade、payment、wallet、message 等。
+- **Service**：处理业务逻辑，包括订单状态机、支付回调幂等、钱包乐观锁更新等。
+- **Mapper**：基于 MyBatis-Plus 访问 MySQL。
+- **中间件**：Redis 提供缓存与分布式锁；RabbitMQ 提供延时消息与异步解耦；OSS 提供图片存储。
 
 ---
 
 ## 四、数据库设计
 
-> 图片占位：`docs/images/er-diagram.png`（数据库 ER 图，待补充）
->
-> 建议内容：核心实体包括 user、goods、orders、payments、user_wallet、wallet_flow、message、conversation 等，展示主外键关系与关键索引。
+核心实体包括 user、goods、orders、payments、user_wallets、wallet_flows、message、notification、picture 等。下面是 `orders` 表的索引设计与实际数据示例。
+
+### 4.1 orders 表索引
+
+![orders 表索引](pictures/database-orders-index.png)
+
+### 4.2 orders 表数据示例
+
+![orders 表数据示例](pictures/database-orders-data.png)
 
 ---
 
@@ -249,11 +258,17 @@ java -jar target/base-service-1.0-SNAPSHOT.jar
 
 本地启动服务后，通过 Knife4j 查看在线文档：
 
-> 图片占位：`docs/images/knife4j-api-doc.png`（Knife4j 接口文档截图，待补充）
-
 地址：http://localhost:8080/doc.html
 
 包含：请求参数、响应示例、认证说明。
+
+### 9.1 接口分组
+
+![Knife4j 接口分组](pictures/knife4j-api-groups.png)
+
+### 9.2 接口详情示例（创建订单）
+
+![Knife4j 创建订单接口详情](pictures/knife4j-create-order.png)
 
 ---
 
@@ -278,12 +293,4 @@ mvn clean test
 ```bash
 mvn allure:serve
 ```
-
----
-
-
-| `docs/images/er-diagram.png` | 数据库 ER 图：核心表关系与关键索引 |
-
-| `docs/images/knife4j-api-doc.png` | Knife4j 接口文档截图：展示接口分组与请求示例 |
-
 
