@@ -29,6 +29,7 @@ CampusMart 是一款校园二手闲置物品交易平台的后端服务，基于
 | **存储**   | MySQL 8.x / 阿里云 OSS                    | 业务数据与文件存储    |
 | **安全**   | JWT / MP 乐观锁                           | 认证与并发安全      |
 | **工具**   | Maven / Lombok / Hutool / Knife4j      | 构建、代码简化、接口文档 |
+| **性能测试** | JMeter 5.6.3 | 多场景并发压测 |
 
 ---
 
@@ -206,7 +207,27 @@ if (!OrderStatus.CREATED.equals(order.getStatus())) {
 
 ### 7.6 MyBatis-Plus 乐观锁
 
-`UserWallet` 实体使用 `@Version` 字段实现乐观锁，`MybatisPlusConfiguration` 注入 `OptimisticLockerInnerInterceptor`；钱包余额更新通过 `updateById` 自动携带版本号，冲突时直接抛异常，由上层决定重试策略。
+`UserWallet` 实体使用 `@Version` 字段实现乐观锁，`MybatisPlusConfiguration` 注入 `OptimisticLockerInnerInterceptor`；钱包余额更新通过 `updateById` 自动携带版本号，冲突时直接抛异常，由上层决定重试策略。  
+
+### 7.7 缓存性能验证（JMeter 压测）
+
+针对 Redis 缓存策略进行 JMeter 多场景压测验证：
+
+- **压测对象**：商品详情（走缓存）/ 商品分页 / 商品搜索（无缓存）/ 创建订单（写）
+- **场景设计**：20 / 50 / 100 并发多场景，含 73%浏览+15%详情+10%搜索+2%下单 的混合场景模拟真实用户
+- **核心结果**（20并发轮）：
+
+| 接口 | 是否缓存 | P50 | TPS |
+|------|:---:|---:|---:|
+| 商品详情 | ✅ Redis缓存 | 9ms | 2258/s |
+| 商品分页 | ❌ 无缓存 | 136ms | 91/s |
+| 商品搜索 | ❌ 无缓存 | 114ms | 107/s |
+
+缓存接口吞吐约为无缓存接口的 20~25 倍，验证了旁路缓存 + 空值缓存 + 随机TTL 策略在高频读场景下的有效性。
+
+![JMeter 20 并发压测报告](pictures/JMeter-report-20.png)
+
+---
 
 
 ## 八、快速开始
@@ -292,5 +313,6 @@ mvn clean test
 
 ```bash
 mvn allure:serve
-```
-
+```  
+  
+该测试工程同时包含 JMeter 性能测试报告，测试覆盖商品详情、分页、搜索、下单四接口的 20/50/100 并发压测场景。
