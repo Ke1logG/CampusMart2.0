@@ -55,7 +55,7 @@ spring:
       # 压测时关闭慢 SQL 日志，避免日志被打爆
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
       stat:
-        log-slow-sql: false
+        log-slow-sql: true
         slow-sql-millis: 1000
       wall:
         config:
