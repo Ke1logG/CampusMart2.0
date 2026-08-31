@@ -92,9 +92,13 @@ CampusMart/
 │       │       ├── vo/                  # 视图对象（请求/响应 VO）
 │       │       ├── listener/            # RabbitMQ 消费者（订单超时监听）
 │       │       └── job/                 # 定时任务（订单超时扫描、支付超时关闭）
-│       └── src/main/resources/
-│           ├── mapper/                  # MyBatis XML 映射文件
-│           └── application.yml          # 主配置文件
+│       ├── src/main/resources/
+│       │   ├── mapper/                  # MyBatis XML 映射文件
+│       │   └── application.yml          # 主配置文件
+│       │
+│       └── src/test/java/               # 单元测试
+│           └── org/example/CampusMart/web/service/impl/
+│               └── PaymentServiceImplTest.java  # 支付宝回调单元测试（Mock 外部依赖）
 │
 ├── database generater/                  # 数据库初始化脚本
 │   ├── campusmart-build-database.sql    # 初始建表脚本
@@ -314,4 +318,5 @@ mvn clean test
 mvn allure:serve
 ```
 
-该测试工程同时包含 JMeter 性能测试报告，测试覆盖商品详情、分页、搜索、下单四接口的 20/50/100 并发压测场景。
+该测试工程同时包含 JMeter 性能测试报告，测试覆盖商品详情、分页、搜索、下单四接口的 20/50/100 并发压测场景。  
+本项目测试部分设计了支付宝回调方法的单元测试，用Mock模拟外部依赖，只验证方法的逻辑。
