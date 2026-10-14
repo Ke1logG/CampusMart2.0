@@ -1,4 +1,4 @@
-package org.example.CampusMart.web.custom.interceptor;
+package org.example.CampusMart.web.security;
 
 
 import io.jsonwebtoken.Claims;

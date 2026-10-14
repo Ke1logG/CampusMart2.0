@@ -1,8 +1,8 @@
-package org.example.CampusMart.web.custom.config;
+package org.example.CampusMart.web.config;
 
 
-import org.example.CampusMart.web.custom.converter.StringToEnumConverterFactory;
-import org.example.CampusMart.web.custom.interceptor.AuthenticationInterceptor;
+import org.example.CampusMart.web.convert.StringToEnumConverterFactory;
+import org.example.CampusMart.web.security.AuthenticationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
