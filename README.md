@@ -81,11 +81,9 @@ CampusMart/
 │       ├── src/main/java/org/example/CampusMart/
 │       │   ├── WebApplication.java      # Spring Boot 启动类
 │       │   └── web/
-│       │       ├── config/              # 基础配置（Redis、RabbitMQ、Druid、Alipay 等）
-│       │       ├── custom/
-│       │       │   ├── config/          # 自定义配置（WebMvc、Knife4j 等）
-│       │       │   ├── converter/       # 类型转换器（StringToEnumConverterFactory）
-│       │       │   └── interceptor/     # JWT 登录认证拦截器
+│       │       ├── config/              # 基础配置（Redis、RabbitMQ、Druid、Alipay、WebMvc、Knife4j 等）
+│       │       ├── convert/             # 类型转换器（StringToEnumConverterFactory）
+│       │       ├── security/            # JWT 登录认证拦截器
 │       │       ├── controller/          # API 接口层（按模块划分：goods、trade、payment 等）
 │       │       ├── service/             # 业务逻辑层（接口 + impl 实现）
 │       │       ├── mapper/              # 数据访问层（MyBatis-Plus Mapper）
