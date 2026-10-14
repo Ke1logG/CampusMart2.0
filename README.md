@@ -247,7 +247,7 @@ if (!OrderStatus.CREATED.equals(order.getStatus())) {
 
 ```bash
 git clone https://github.com/Ke1logG/CampusMart2.0.git
-cd CampusMart2.0/server/base-service
+cd CampusMart2.0/server
 mvn clean package -DskipTests
 ```
 
@@ -271,6 +271,7 @@ mysql -u root -p < "database generater/campusmart-build-database.sql"
 ### 8.5 启动服务
 
 ```bash
+cd base-service
 mvn spring-boot:run
 # 或
 java -jar target/base-service-1.0-SNAPSHOT.jar
